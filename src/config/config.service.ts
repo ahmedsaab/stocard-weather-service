@@ -6,6 +6,17 @@ export interface EnvConfig {
   [key: string]: string;
 }
 
+const envVarsSchema: Joi.ObjectSchema = Joi.object({
+  PORT: Joi.number().default(3000),
+  WEATHER_API_ROOT: Joi.string().required(),
+  WEATHER_API_KEY: Joi.string().required(),
+  DB_USER: Joi.string().required(),
+  DB_PASSWORD: Joi.string().required(),
+  DB_HOST: Joi.string().required(),
+  DB_PORT: Joi.number().required(),
+  DB_NAME: Joi.string().required(),
+});
+
 export class ConfigService {
   private readonly envConfig: EnvConfig;
 
@@ -14,22 +25,7 @@ export class ConfigService {
     this.envConfig = ConfigService.validateInput(config);
   }
 
-  /**
-   * This here is just to ensure all needed variables are set, and
-   * returns the validated JavaScript object including the applied
-   * default values.
-   */
   private static validateInput(envConfig: EnvConfig): EnvConfig {
-    const envVarsSchema: Joi.ObjectSchema = Joi.object({
-      PORT: Joi.number().default(3000),
-      WEATHER_API_ROOT: Joi.string().required(),
-      WEATHER_API_KEY: Joi.string().required(),
-      DB_USER: Joi.string().required(),
-      DB_PASSWORD: Joi.string().required(),
-      DB_PORT: Joi.string().required(),
-      DB_HOST: Joi.string().required(),
-    });
-
     const { error, value: validatedEnvConfig } = Joi.validate(
       envConfig,
       envVarsSchema,
@@ -58,5 +54,13 @@ export class ConfigService {
 
   get dbHost(): string {
     return String(this.envConfig.DB_HOST);
+  }
+
+  get dbPort(): number {
+    return Number(this.envConfig.DB_PORT);
+  }
+
+  get dbName(): string {
+    return String(this.envConfig.DB_NAME);
   }
 }

@@ -13,8 +13,6 @@ services:
   weather-api:
     build: .
     container_name: WeatherAPI
-    environment:
-      - NODE_ENV=development
     ports:
       - '3000:3000'
     depends_on:

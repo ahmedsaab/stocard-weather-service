@@ -10,9 +10,9 @@ $ npm install
 
 ### Running the app
 
-The config folder is located in `./config` and a postgresql database is needed
+- The config folder is located in `./config`
+- A postgresql database is needed (use docker-compose for inclusive dependencies)
 
-*Note: use docker for inclusive dependencies*
 
 ```bash
 # import data from the json file to the db
@@ -28,6 +28,13 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+OR
+
+```bash
+# run postgresql database and the service API
+$ docker-compose up
+```
+
 ### Test
 
 ```bash
@@ -41,12 +48,6 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
-### Docker
-
-```bash
-# run database and service
-$ docker-compose up
-```
 
 
 ## Original README
