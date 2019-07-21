@@ -3,7 +3,7 @@ const json = require('big-json');
 const { Client } = require('pg');
 const format = require('pg-format');
 
-const readStream = fs.createReadStream('./scripts/city.list.json');
+const readStream = fs.createReadStream('src/scripts/city.list.json');
 const parseStream = json.createParseStream();
 
 parseStream.on('data', async (pojo) => {
@@ -11,6 +11,7 @@ parseStream.on('data', async (pojo) => {
     user: 'root',
     password: 'toor',
     database: 'postgres',
+    host: 'weather-db'
   });
   const cities = [];
   for(let i in pojo) {

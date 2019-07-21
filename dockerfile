@@ -9,4 +9,6 @@ COPY . .
 
 EXPOSE 3000
 
+RUN npm run import-data
+
 CMD [ "npm", "run", "start:dev" ]

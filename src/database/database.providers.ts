@@ -5,7 +5,7 @@ export const databaseProviders = [
     provide: 'DATABASE_CONNECTION',
     useFactory: async () => await createConnection({
       type: 'postgres',
-      host: 'localhost',
+      host: 'weather-db',
       port: 5432,
       username: 'root',
       password: 'toor',
@@ -13,7 +13,6 @@ export const databaseProviders = [
       entities: [
         __dirname + '/../**/*.entity{.ts,.js}',
       ],
-      synchronize: true,
     }),
   },
 ];
