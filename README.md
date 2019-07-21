@@ -9,7 +9,7 @@ $ npm install
 ```
 
 ### Running the app
-- The config file sample is `.env` so make a copy of `.env.sample` and call it `.env`
+- The config file is `.env`
 
 ```bash
 # run postgresql database and the service API (this will also run the unit tests)
