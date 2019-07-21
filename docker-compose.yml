@@ -4,12 +4,16 @@ services:
   weather-db:
     image: postgres:10-alpine
     container_name: WeatherDB
+    ports:
+      - '5432:5432'
     environment:
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=toor
       - POSTGRES_DB=postgres
     volumes:
       - ./docker-volumes/postgresql:/var/lib/postgresql
+    networks:
+      - weather-app-network
   weather-api:
     build: .
     container_name: WeatherAPI
@@ -17,3 +21,7 @@ services:
       - '3000:3000'
     depends_on:
       - weather-db
+    networks:
+      - weather-app-network
+networks:
+  weather-app-network:

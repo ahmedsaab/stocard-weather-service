@@ -9,6 +9,7 @@ import { Connection } from 'typeorm';
 
 const readStream = fs.createReadStream('src/database/city.list.json');
 const parseStream = json.createParseStream();
+
 const queries = {
   dropTable: `
     DROP TABLE IF EXISTS cities;

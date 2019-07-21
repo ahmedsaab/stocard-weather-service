@@ -9,10 +9,19 @@ $ npm install
 ```
 
 ### Running the app
-
 - The config file sample is `.env` so make a copy of `.env.sample` and call it `.env`
-- A postgresql database is needed (use docker-compose for inclusive dependencies)
 
+```bash
+# run postgresql database and the service API (this will also run the unit tests)
+$ docker-compose up --build
+
+# to run the e2e test make sure that the docker-compose is running then run
+$ docker exec -it WeatherAPI npm run test:e2e
+```
+OR
+
+To run without docker:
+- A postgresql database is needed (use docker-compose for inclusive dependencies)
 
 ```bash
 # development
@@ -25,26 +34,18 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-OR
-
-```bash
-# run postgresql database and the service API
-$ docker-compose up
-```
-
 ### Test
 
 ```bash
 # unit tests
 $ npm run test
 
-# e2e tests
+# e2e tests (make sure the db is running if not running docker)
 $ npm run test:e2e
 
 # test coverage
 $ npm run test:cov
 ```
-
 
 
 ## Original README

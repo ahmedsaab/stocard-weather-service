@@ -7,7 +7,7 @@ export interface EnvConfig {
 }
 
 const envVarsSchema: Joi.ObjectSchema = Joi.object({
-  PORT: Joi.number().default(3000),
+  SERVER_PORT: Joi.number().default(3000),
   WEATHER_API_ROOT: Joi.string().required(),
   WEATHER_API_KEY: Joi.string().required(),
   DB_USER: Joi.string().required(),
@@ -34,6 +34,10 @@ export class ConfigService {
       throw new Error(`Config validation error: ${error.message}`);
     }
     return validatedEnvConfig;
+  }
+
+  get serverPort(): string {
+    return String(this.envConfig.SERVER_PORT);
   }
 
   get weatherApiRoot(): string {

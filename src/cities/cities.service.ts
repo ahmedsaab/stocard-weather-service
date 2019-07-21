@@ -51,12 +51,12 @@ export class CitiesService {
       return {
         type: data.weather[0].main,
         type_description: data.weather[0].description,
-        sunrise: data.sys.sunrise,
-        sunset: data.sys.sunset,
+        sunrise: new Date(data.sys.sunrise),
+        sunset: new Date(data.sys.sunset),
         temp: data.main.temp,
         temp_min: data.main.temp_min,
         temp_max: data.main.temp_max,
-        pressure: data.main.preasure,
+        pressure: data.main.pressure,
         humidity: data.main.humidity,
         clouds_percent: data.clouds.all,
         wind_speed: data.wind.speed,
@@ -68,7 +68,9 @@ export class CitiesService {
 
   async getCitiesAround(lat: number, lng: number, range: number): Promise<City[]> {
     return await this.cityRepository.query(`
-      SELECT * FROM (
+      SELECT
+        id, name, lat, lng
+      FROM (
           SELECT *, (
               (
                   (
