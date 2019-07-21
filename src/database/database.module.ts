@@ -7,6 +7,25 @@ import { databaseProviders } from './database.providers';
 import { ConfigModule } from '../config/config.module';
 import { Connection } from 'typeorm';
 
+const readStream = fs.createReadStream('src/database/city.list.json');
+const parseStream = json.createParseStream();
+const queries = {
+  dropTable: `
+    DROP TABLE IF EXISTS cities;
+  `,
+  createTable: `
+    CREATE TABLE cities (
+     id INT NOT NULL PRIMARY KEY,
+     name VARCHAR (100),
+     lng FLOAT,
+     lat FLOAT
+    );
+  `,
+  insertCity: `
+    INSERT INTO cities (id, name, lng, lat) VALUES %L
+  `,
+};
+
 @Module({
   imports: [ConfigModule],
   providers: [...databaseProviders],
@@ -17,26 +36,6 @@ export class DatabaseModule {
     @Inject('DATABASE_CONNECTION')
     private readonly connection: Connection,
   ) {
-    const readStream = fs.createReadStream('src/database/city.list.json');
-    const parseStream = json.createParseStream();
-
-    const queries = {
-      dropTable: `
-        DROP TABLE IF EXISTS cities;
-      `,
-      createTable: `
-        CREATE TABLE cities (
-         id INT NOT NULL PRIMARY KEY,
-         name VARCHAR (100),
-         lng FLOAT,
-         lat FLOAT
-        );
-      `,
-      insertCity: `
-        INSERT INTO cities (id, name, lng, lat) VALUES %L
-      `,
-    };
-
     parseStream.on('data', async (pojo) => {
       try {
         const cities = [];

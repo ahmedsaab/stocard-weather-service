@@ -10,14 +10,11 @@ $ npm install
 
 ### Running the app
 
-- The config folder is located in `./config`
+- The config file sample is `.env` so make a copy of `.env.sample` and call it `.env`
 - A postgresql database is needed (use docker-compose for inclusive dependencies)
 
 
 ```bash
-# import data from the json file to the db
-$ npm run import-data
-
 # development
 $ npm run start
 
