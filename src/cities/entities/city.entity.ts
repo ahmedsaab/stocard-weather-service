@@ -5,7 +5,7 @@ export class CityEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ length: '100' })
+  @Column('varchar', { length: '100', nullable: false })
   name: string;
 
   @Column('float')

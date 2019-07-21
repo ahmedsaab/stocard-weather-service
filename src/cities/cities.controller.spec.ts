@@ -12,7 +12,7 @@ describe('CitiesController', () => {
   });
 
   describe('viewCity', () => {
-    it('should return the city', async () => {
+    it('should return the city data', async () => {
       const result = {
         id: 1,
         name: 'test-city',
@@ -26,7 +26,7 @@ describe('CitiesController', () => {
   });
 
   describe('viewCityWeather', () => {
-    it('should return the city', async () => {
+    it('should return the weather of the city', async () => {
       const result = {
         type: 'Clear',
         type_description: 'clear sky',
@@ -47,7 +47,7 @@ describe('CitiesController', () => {
   });
 
   describe('viewNearBy', () => {
-    it('should return the city', async () => {
+    it('should return the close by cities', async () => {
       const cities = [
         {
           id: 1,

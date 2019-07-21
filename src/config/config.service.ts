@@ -8,6 +8,7 @@ export interface EnvConfig {
 
 const envVarsSchema: Joi.ObjectSchema = Joi.object({
   SERVER_PORT: Joi.number().default(3000),
+  CITIES_SOURCE_URL: Joi.string().required(),
   WEATHER_API_ROOT: Joi.string().required(),
   WEATHER_API_KEY: Joi.string().required(),
   DB_USER: Joi.string().required(),
@@ -66,5 +67,9 @@ export class ConfigService {
 
   get dbName(): string {
     return String(this.envConfig.DB_NAME);
+  }
+
+  get citiesSourceUrl(): string {
+    return String(this.envConfig.CITIES_SOURCE_URL);
   }
 }

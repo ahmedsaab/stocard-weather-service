@@ -1,13 +1,14 @@
 import { Inject, Module } from '@nestjs/common';
-import * as fs from 'fs';
 import * as json from 'big-json';
 import * as pgFormat from 'pg-format';
+import * as request from 'request';
+import * as zlib from 'zlib';
 
 import { databaseProviders } from './database.providers';
 import { ConfigModule } from '../config/config.module';
 import { Connection } from 'typeorm';
+import { ConfigService } from '../config/config.service';
 
-const readStream = fs.createReadStream('src/database/city.list.json');
 const parseStream = json.createParseStream();
 
 const queries = {
@@ -36,7 +37,10 @@ export class DatabaseModule {
   constructor(
     @Inject('DATABASE_CONNECTION')
     private readonly connection: Connection,
-  ) {
+    private readonly configService: ConfigService,
+  ) {}
+
+  async importData() {
     parseStream.on('data', async (pojo) => {
       try {
         const cities = [];
@@ -51,9 +55,9 @@ export class DatabaseModule {
           }
         }
 
-        await connection.query(queries.dropTable);
-        await connection.query(queries.createTable);
-        await connection.query(
+        await this.connection.query(queries.dropTable);
+        await this.connection.query(queries.createTable);
+        await this.connection.query(
           pgFormat(queries.insertCity, cities),
         );
 
@@ -63,6 +67,8 @@ export class DatabaseModule {
       }
     });
 
-    readStream.pipe(parseStream);
+    await request.get(this.configService.citiesSourceUrl)
+      .pipe(zlib.createGunzip())
+      .pipe(parseStream);
   }
 }
