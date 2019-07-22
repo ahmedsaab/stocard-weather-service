@@ -64,7 +64,10 @@ describe('CitiesController', () => {
       ];
       jest.spyOn(citiesService, 'getCitiesAround').mockResolvedValue(Promise.resolve(cities));
 
-      expect(await citiesController.viewNearBy(123, 456)).toEqual(cities);
+      expect(await citiesController.viewNearBy({
+        lat: 123,
+        lng: 456,
+      })).toEqual(cities);
     });
   });
 });
