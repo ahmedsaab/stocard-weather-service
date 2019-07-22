@@ -2,6 +2,7 @@ import { Controller, Get, Param, Query } from '@nestjs/common';
 import { CitiesService } from './cities.service';
 import { City } from './interfaces/city.interface';
 import { Weather } from './interfaces/weather.interface';
+import { CityLocation } from './dto/query/city.location';
 
 @Controller('cities')
 export class CitiesController {
@@ -23,9 +24,8 @@ export class CitiesController {
 
   @Get()
   async viewNearBy(
-    @Query('lat') lat: number,
-    @Query('lng') lng: number,
+    @Query() query: CityLocation,
   ): Promise<City[]> {
-    return this.citiesService.getCitiesAround(lat, lng, 10);
+    return this.citiesService.getCitiesAround(query.lat, query.lng, 10);
   }
 }
